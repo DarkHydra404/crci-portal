@@ -1,0 +1,30 @@
+name: Morning Birthday Call
+on:
+  schedule:
+    # This runs at 5:00 AM UTC (6:00 AM Lagos Time) every single day
+    - cron: '0 5 * * *'
+  workflow_dispatch: # This adds a button so you can test it manually anytime
+
+jobs:
+  run-birthday-engine:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install Dependencies
+        run: pip install twilio pandas
+
+      - name: Execute Birthday Check
+        env:
+          TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID }}
+          TWILIO_AUTH_TOKEN: ${{ secrets.TWILIO_AUTH_TOKEN }}
+          TWILIO_NUMBER: ${{ secrets.TWILIO_NUMBER }}
+          MY_PHONE_NUMBER: ${{ secrets.MY_PHONE_NUMBER }}
+        run: python birthday_script.py
+        
