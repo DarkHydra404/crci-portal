@@ -11,8 +11,9 @@ def make_deep_voice_call(child_name, target_phone):
     twiml_content = f"""
     <Response>
         <Say voice="Polly.Matthew">
-            Good morning. This is the Children Reading for a Change Initiative automated system. 
+            Good morning. This is the Children Reading for a Change Initiative. 
             Today is {child_name}'s birthday. 
+            I repeat, today is {child_name}'s birthday. 
             Please remember to celebrate with them and make their day special.
             The CRCi mission continues with you. Goodbye.
         </Say>
