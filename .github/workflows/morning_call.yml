@@ -1,0 +1,25 @@
+name: CRCi Morning Birthday Call
+on:
+  schedule:
+    - cron: '0 5 * * *' 
+  workflow_dispatch: 
+
+jobs:
+  run-call:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+      - name: Install Dependencies
+        run: pip install twilio pandas
+      - name: Trigger Voice Call
+        env:
+          TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID }}
+          TWILIO_AUTH_TOKEN: ${{ secrets.TWILIO_AUTH_TOKEN }}
+          TWILIO_NUMBER: ${{ secrets.TWILIO_NUMBER }}
+          MY_PHONE_NUMBER: ${{ secrets.MY_PHONE_NUMBER }}
+        run: python birthday_script.py
+        
